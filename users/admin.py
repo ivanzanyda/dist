@@ -146,7 +146,7 @@ class admin_window(QMainWindow, Ui_AdminWindow):
             self.tableWidgetOrders.setItem(i, 7, QTableWidgetItem(f"{float(row['total_amount']):.2f}"))
             self.tableWidgetOrders.setItem(i, 8, QTableWidgetItem(row['status']))
 
-    def select_order(self, row, column):
+    def select_order(self, row):
         self.selected_order_id = int(self.tableWidgetOrders.item(row, 0).text())
 
     def add_order(self):
