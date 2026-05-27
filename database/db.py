@@ -20,8 +20,6 @@ def db_connect():
 
 def check_login(username, password):
     db = db_connect()
-    if db is None:
-        return None
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -37,8 +35,6 @@ WHERE users.username = %s AND users.password = %s
 
 def all_categories():
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -54,8 +50,6 @@ ORDER BY category
 
 def all_clients():
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -72,8 +66,6 @@ ORDER BY users.full_name
 
 def all_items():
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -93,8 +85,6 @@ ORDER BY items.item_id
 
 def one_item(item_id):
     db = db_connect()
-    if db is None:
-        return None
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -114,8 +104,6 @@ WHERE items.item_id = %s
 
 def items_by_category(category):
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -136,8 +124,6 @@ ORDER BY items.item_id
 
 def search_items(text):
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -158,8 +144,6 @@ ORDER BY items.item_id
 
 def items_sorted(sort_name, direction):
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             if sort_name == 'Цена' and direction == 'ASC':
@@ -224,8 +208,6 @@ ORDER BY items.item_id
 
 def add_item(item_name, description, price, category, image):
     db = db_connect()
-    if db is None:
-        return None
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -242,8 +224,6 @@ VALUES (%s, %s, %s, %s, %s)
 
 def edit_item(item_id, item_name, description, price, category, image):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -261,8 +241,6 @@ WHERE item_id = %s
 
 def delete_item(item_id):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("UPDATE orders SET item_id = NULL WHERE item_id = %s", (item_id,))
@@ -278,8 +256,6 @@ def delete_item(item_id):
 
 def save_discount(item_id, discount_percent, date_end):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("DELETE FROM discounts WHERE item_id = %s", (item_id,))
@@ -298,8 +274,6 @@ VALUES (%s, %s, CURDATE(), %s)
 
 def all_orders():
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -320,8 +294,6 @@ ORDER BY orders.order_id DESC
 
 def orders_by_user(user_id):
     db = db_connect()
-    if db is None:
-        return []
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -341,8 +313,6 @@ ORDER BY orders.order_id DESC
 
 def one_order(order_id):
     db = db_connect()
-    if db is None:
-        return None
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -357,8 +327,6 @@ WHERE order_id = %s
 
 def add_order(user_id, item_id, quantity, delivery_type, delivery_place, status='Новый'):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -390,8 +358,6 @@ VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
 
 def edit_order(order_id, user_id, item_id, quantity, delivery_type, delivery_place, status):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("""
@@ -424,8 +390,6 @@ WHERE order_id = %s
 
 def delete_order(order_id):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("DELETE FROM orders WHERE order_id = %s", (order_id,))
@@ -439,8 +403,6 @@ def delete_order(order_id):
 
 def update_order_status(order_id, status):
     db = db_connect()
-    if db is None:
-        return False
     try:
         with db.cursor() as cursor:
             cursor.execute("UPDATE orders SET status = %s WHERE order_id = %s", (status, order_id))
